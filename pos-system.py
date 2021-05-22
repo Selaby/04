@@ -16,10 +16,19 @@ class Order:
     
     def add_item_order(self,item_code):
         self.item_order_list.append(item_code)
-        
+                
     def view_item_list(self):
         for item in self.item_order_list:
-            print("商品コード:{}".format(item))
+            print(f"商品コード:{item}")
+    
+    # 課題1 item_codeを入力することで、その商品の名前と価格を表示する
+    def view_name_and_price(self,item_code):
+        for m in self.item_master:
+            if item_code == m.item_code:
+                # return m.item_name,m.price
+                print(f"商品コード:{m.item_code}")
+                print(f"商品名:{m.item_name}")
+                print(f"価格:{m.price}")
     
     
 ### メイン処理
@@ -37,7 +46,10 @@ def main():
     order.add_item_order("003")
     
     # オーダー表示
-    order.view_item_list()
-    
+    # order.view_item_list()
+
+    # 商品情報表示
+    order.view_name_and_price("001")
+        
 if __name__ == "__main__":
     main()
