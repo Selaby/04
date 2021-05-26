@@ -1,6 +1,6 @@
 import pandas as pd
 
-ITEM_MASTER_CSV_PATH="./master.csv"
+ITEM_MASTER_CSV_PATH="./item_master.csv"
 
 ### 商品クラス
 class Item:
@@ -21,25 +21,26 @@ class Order:
     def add_item_order(self,item_code):
         self.item_order_list.append(item_code)
                 
-    def view_item_list(self):
-        for item in self.item_order_list:
-            print(f"商品コード:{item}")
+    # def view_item_list(self):
+    #     for item in self.item_order_list:
+    #         print(f"商品コード:{item}")
     
     # 課題1 item_codeを入力することで、その商品の名前と価格を表示する
     def view_name_and_price(self,item_code):
         for m in self.item_master:
             if item_code == m.item_code:
-                # return m.item_name,m.price
                 print(f"商品コード:{m.item_code}")
                 print(f"商品名:{m.item_name}")
                 print(f"価格:{m.price}")
+                return m.item_name,m.price
 
 # 課題3 csvから商品マスタを登録する
 def register_by_csv(csv_path):
     item_master=[]
-    item_master_df = pd.read_csv(csv_path, encoding="utf-8",dtype={"item_code":object}) # CSVでは先頭の0が削除されるためこれを保持するための設定
+    item_master_df = pd.read_csv(csv_path, encoding="utf-8", dtype={"item_code":object}) # CSVでは先頭の0が削除されるためこれを保持するための設定
     for item_code,item_name,price in zip(item_master_df["item_code"],item_master_df["item_name"],item_master_df["price"]):
         item_master.append(Item(item_code,item_name,price))
+    # print(item_master)
     return item_master
 
 ### メイン処理
@@ -51,12 +52,9 @@ def main():
     # item_master.append(Item("003","みかん",150))
 
     # 課題3 csvから商品マスタを登録する
-    item_master=register_by_csv(ITEM_MASTER_CSV_PATH)
+    item_master = register_by_csv(ITEM_MASTER_CSV_PATH)
     # item_master = pd.read_csv("./master.csv", encoding="utf-8")
-    # for item_code, item_name, price in zip(list(item_master["item_code"]),list(item_master["item_name"]),list(item_master["price"])):
-    #     item_master.append(Item(item_code, item_name, price))
-    print(item_master)
-    
+        
     # オーダー登録
     order=Order(item_master)
 
