@@ -14,25 +14,40 @@ class Item:
 
 ### オーダークラス
 class Order:
+    # def __init__(self,item_master):
+    #     self.item_order_list=[]
+    #     self.item_master=item_master
+    
+    # 課題4 オーダーリストを辞書型にして個数も登録できるようにする
     def __init__(self,item_master):
-        self.item_order_list=[]
+        self.item_order_list={}
         self.item_master=item_master
     
-    def add_item_order(self,item_code):
-        self.item_order_list.append(item_code)
-                
-    # def view_item_list(self):
-    #     for item in self.item_order_list:
-    #         print(f"商品コード:{item}")
+    # def add_item_order(self,item_code):
+    #     self.item_order_list.append(item_code)
+
+    # 課題4 オーダーリストを辞書型にして個数も登録できるようにする
+    def add_item_order(self,order_code,order_qty):
+        self.item_order_list[order_code] = order_qty
+    
+    # 課題4 辞書型にしたオーダーリストからkeyをもとに抽出
+    def view_item_list(self):
+        for key in self.item_order_list.keys():
+            for m in self.item_master:
+                if key == m.item_code:
+                    value = self.item_order_list[key]
+                    print(f"商品コード:{key}")
+                    print(f"商品名:{m.item_name}")
+                    print(f"個数:{value}")
     
     # 課題1 item_codeを入力することで、その商品の名前と価格を表示する
-    def view_name_and_price(self,item_code):
-        for m in self.item_master:
-            if item_code == m.item_code:
-                print(f"商品コード:{m.item_code}")
-                print(f"商品名:{m.item_name}")
-                print(f"価格:{m.price}")
-                return m.item_name,m.price
+    # def view_name_and_price(self,item_code):
+    #     for m in self.item_master:
+    #         if item_code == m.item_code:
+    #             print(f"商品コード:{m.item_code}")
+    #             print(f"商品名:{m.item_name}")
+    #             print(f"価格:{m.price}")
+    #             return m.item_name,m.price
 
 # 課題3 csvから商品マスタを登録する
 def register_by_csv(csv_path):
@@ -60,16 +75,18 @@ def main():
 
     # 課題2 ターミナルから商品コードを登録する
     order_code = input("商品コードを入力してください >> ")
-    order.add_item_order(order_code)
+    # 課題4 個数も登録する
+    order_qty = input("個数を入力してください >> ")
+    order.add_item_order(order_code,order_qty)
     # order.add_item_order("001")
     # order.add_item_order("002")
     # order.add_item_order("003")
     
     # オーダー表示
-    # order.view_item_list()
+    order.view_item_list()
 
     # 商品情報表示
-    order.view_name_and_price(order_code)
+    # order.view_name_and_price(order_code)
         
 if __name__ == "__main__":
     main()
