@@ -1,6 +1,6 @@
 import pandas as pd
 
-ITEM_MASTER_CSV_PATH="./item_master.csv"
+ITEM_MASTER_CSV_PATH="./master.csv" # カレントディレクトリの状態に要注意 ずれているとFileNotFoundErrorが出る
 
 ### 商品クラス
 class Item:
