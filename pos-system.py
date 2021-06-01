@@ -38,6 +38,7 @@ class Order:
                     value = self.item_order_list[key]
                     print(f"商品コード:{key}")
                     print(f"商品名:{m.item_name}")
+                    print(f"価格:{m.price}")
                     print(f"個数:{value}")
     
     # 課題1 item_codeを入力することで、その商品の名前と価格を表示する
