@@ -29,17 +29,36 @@ class Order:
     # 課題4 オーダーリストを辞書型にして個数も登録できるようにする
     def add_item_order(self,order_code,order_qty):
         self.item_order_list[order_code] = order_qty
+
+    # 課題2 ターミナルから商品コードを登録する
+    def input_order(self):
+        while True:
+            order_code = input("商品コードを入力してください　登録を完了する場合は999を入力してください >> ")
+            if int(order_code) != 999:
+                # 課題4 個数も登録する
+                order_qty = input("個数を入力してください >> ")
+                self.add_item_order(order_code,order_qty)
+            else:
+                print("商品登録を終了します\n")
+                break
     
     # 課題4 辞書型にしたオーダーリストからkeyをもとに抽出
     def view_item_list(self):
+        self.sum = 0
+        print("-----商品登録リスト-----")
         for key in self.item_order_list.keys():
             for m in self.item_master:
                 if key == m.item_code:
                     value = self.item_order_list[key]
+                    self.sum += m.price * int(value)
                     print(f"商品コード:{key}")
                     print(f"商品名:{m.item_name}")
                     print(f"価格:{m.price}")
                     print(f"個数:{value}")
+                    print(f"小計:{m.price * int(value)}\n")
+        print(f"合計:{self.sum}\n-----商品登録リスト終了-----")
+                # else:
+                #     print("商品が登録されていません")
     
     # 課題1 item_codeを入力することで、その商品の名前と価格を表示する
     # def view_name_and_price(self,item_code):
@@ -73,12 +92,13 @@ def main():
         
     # オーダー登録
     order=Order(item_master)
+    order.input_order()
 
     # 課題2 ターミナルから商品コードを登録する
-    order_code = input("商品コードを入力してください >> ")
-    # 課題4 個数も登録する
-    order_qty = input("個数を入力してください >> ")
-    order.add_item_order(order_code,order_qty)
+    # order_code = input("商品コードを入力してください >> ")
+    # # 課題4 個数も登録する
+    # order_qty = input("個数を入力してください >> ")
+    # order.add_item_order(order_code,order_qty)
     # order.add_item_order("001")
     # order.add_item_order("002")
     # order.add_item_order("003")
