@@ -27,17 +27,21 @@ class Order:
     #     self.item_order_list.append(item_code)
 
     # 課題4 オーダーリストを辞書型にして個数も登録できるようにする
-    def add_item_order(self,order_code,order_qty):
-        self.item_order_list[order_code] = order_qty
+    # def add_item_order(self,order_code,total_qty):
+    #     self.item_order_list[order_code] = total_qty
 
     # 課題2 ターミナルから商品コードを登録する
     def input_order(self):
         while True:
             order_code = input("商品コードを入力してください　登録を完了する場合は999を入力してください >> ")
-            if int(order_code) != 999:
+            if int(order_code) != 999: # ここは整数型
                 # 課題4 個数も登録する
-                order_qty = input("個数を入力してください >> ")
-                self.add_item_order(order_code,order_qty)
+                if str(order_code) not in self.item_order_list: # item_order_listに当該商品コードが存在しない場合は新たに作成する。ここは文字列型
+                    order_qty = input("個数を入力してください >> ")
+                    self.item_order_list[order_code] = int(order_qty)
+                else:
+                    order_qty = input("個数を入力してください >> ")                    
+                    self.item_order_list[order_code] += int(order_qty)
             else:
                 print("商品登録を終了します\n")
                 break
