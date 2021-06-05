@@ -57,10 +57,10 @@ class Order:
                     self.sum += m.price * int(value)
                     print(f"商品コード:{key}")
                     print(f"商品名:{m.item_name}")
-                    print(f"価格:{m.price}")
-                    print(f"個数:{value}")
-                    print(f"小計:{m.price * int(value)}\n")
-        print(f"合計:{self.sum}\n-----商品登録リスト終了-----")
+                    print(f"価格:{m.price:,}")
+                    print(f"個数:{value:,}")
+                    print(f"小計:{m.price * int(value):,}\n")
+        print(f"合計:{self.sum:,}\n-----商品登録リスト終了-----\n")
                 # else:
                 #     print("商品が登録されていません")
     
@@ -72,6 +72,17 @@ class Order:
     #             print(f"商品名:{m.item_name}")
     #             print(f"価格:{m.price}")
     #             return m.item_name,m.price
+
+    # 課題6 預り金額を入力し、お釣りを計算する
+    def payment(self):
+        while True:
+            deposit = input("お預かり金額を入力してください >> ")
+            change = int(deposit) - self.sum
+            if change >= 0:
+                print(f"{int(deposit):,}円お預かりいたします。\nお釣りは{change:,}円です。\nご利用ありがとうございました。")
+                break
+            else:
+                print(f"お支払いが不足しております。\nあと{abs(change):,}円足りません。\n")
 
 # 課題3 csvから商品マスタを登録する
 def register_by_csv(csv_path):
@@ -112,6 +123,9 @@ def main():
 
     # 商品情報表示
     # order.view_name_and_price(order_code)
+
+    # 会計
+    order.payment()
         
 if __name__ == "__main__":
     main()
