@@ -14,14 +14,6 @@ class Item:
     def get_price(self):
         return self.price
 
-    # 課題3 csvから商品マスタを登録する
-    def register_by_csv(csv_path):
-        item_master=[]
-        item_master_df = pd.read_csv(csv_path, encoding="utf-8", dtype={"item_code":object}) # CSVでは先頭の0が削除されるためこれを保持するための設定
-        for item_code,item_name,price in zip(item_master_df["item_code"],item_master_df["item_name"],item_master_df["price"]):
-            item_master.append(Item(item_code,item_name,price))
-        return item_master
-
 ### オーダークラス
 class Order:
     # def __init__(self,item_master):
@@ -103,6 +95,14 @@ class Order:
             else:
                 self.write_receipt(f"{int(deposit):,}円お預かりいたします。\n\n【 残 高 不 足 】\nお支払いが不足しております。\nあと{abs(change):,}円足りません。\n")
 
+# 課題3 csvから商品マスタを登録する
+def register_by_csv(csv_path):
+    item_master=[]
+    item_master_df = pd.read_csv(csv_path, encoding="utf-8", dtype={"item_code":object}) # CSVでは先頭の0が削除されるためこれを保持するための設定
+    for item_code,item_name,price in zip(item_master_df["item_code"],item_master_df["item_name"],item_master_df["price"]):
+        item_master.append(Item(item_code,item_name,price))
+    return item_master
+
 ### メイン処理
 def main():
     # マスタ登録
@@ -112,7 +112,7 @@ def main():
     # item_master.append(Item("003","みかん",150))
 
     # 課題3 csvから商品マスタを登録する
-    item_master = Item.register_by_csv(ITEM_MASTER_CSV_PATH)
+    item_master = register_by_csv(ITEM_MASTER_CSV_PATH)
     # item_master = pd.read_csv("./master.csv", encoding="utf-8")
 
     # オーダー登録
